@@ -1,0 +1,10 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+body{@apply bg-cream text-slate-800 font-body}
+h1,h2,h3{@apply font-head text-navy}
+.btn{@apply relative overflow-hidden rounded-full bg-navy px-6 py-2.5 font-semibold text-white transition hover:bg-coral active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sunny}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,201,60,.6) 50%,transparent 70%);transform:translateX(-120%);animation:sh 3.5s infinite}
+@keyframes sh{to{transform:translateX(120%)}}
+.inp{@apply w-full rounded-2xl border-2 border-navy/10 bg-white px-4 py-2.5 outline-none focus:border-skyb}
+.wave{height:18px;background:radial-gradient(circle at 10px 0,transparent 9px,#FFC93C 10px) repeat-x;background-size:20px 18px}
+@keyframes mq{to{transform:translateX(-50%)}}.mq{animation:mq 25s linear infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

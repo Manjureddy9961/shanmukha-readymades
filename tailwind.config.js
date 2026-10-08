@@ -1,0 +1,1 @@
+export default {content:['./index.html','./src/**/*.{js,jsx}'],theme:{extend:{colors:{navy:'#1E2A5A',sunny:'#FFC93C',coral:'#FF6B6B',skyb:'#4DB6E8',mint:'#5ED3A8',cream:'#FFF9EC'},fontFamily:{head:['"Baloo 2"','sans-serif'],body:['Inter','sans-serif']}}}}
