@@ -15,3 +15,5 @@ export function Counter({to,suffix=''}){const r=useRef(),v=useInView(r,{once:tru
 export const Logo=({size=48,draw})=><svg width={size} height={size} viewBox="0 0 100 100" aria-label="Shanmukha Readymades logo"><circle cx="50" cy="50" r="47" fill="#1E2A5A" stroke="#FFC93C" strokeWidth="4"/>
 <motion.path d="M50 36c0-6 8-6 8-13a8 8 0 1 0-16 0M50 36L18 64h64z" fill="none" stroke="#FFC93C" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" initial={draw?{pathLength:0}:false} animate={{pathLength:1}} transition={{duration:1.8}}/>
 <motion.circle cx="76" cy="74" r="9" fill="#FF6B6B" initial={draw?{scale:0}:false} animate={{scale:1}} transition={{delay:1.6,type:'spring'}}/></svg>;
+
+export const CartCtx=createContext();export const useCart=()=>useContext(CartCtx);

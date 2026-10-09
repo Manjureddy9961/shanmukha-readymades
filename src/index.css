@@ -8,3 +8,10 @@ h1,h2,h3{@apply font-head text-navy}
 .wave{height:18px;background:radial-gradient(circle at 10px 0,transparent 9px,#FFC93C 10px) repeat-x;background-size:20px 18px}
 @keyframes mq{to{transform:translateX(-50%)}}.mq{animation:mq 25s linear infinite}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+html,body{overflow-x:hidden}
+html{font-size:15px}
+@media (min-width:640px){html{font-size:16px}}
+@media (min-width:1280px){html{font-size:17px}}
+@media (min-width:1536px){html{font-size:18px}}
+.inp{font-size:16px}
