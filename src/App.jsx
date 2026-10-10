@@ -12,8 +12,8 @@ return <motion.header animate={{paddingBlock:s?6:14}} className="fixed inset-x-0
 <L to="/gallery">Gallery</L><L to="/about">About</L><L to="/faq">FAQ</L><L to="/contact">Contact</L><L to="/wishlist">♥</L><L to="/cart">🛒{n>0&&<span className="ml-1 rounded-full bg-coral px-2 text-xs">{n}</span>}</L><Link to="/prebook" onClick={()=>setOpen(false)} className="rounded-full bg-coral px-4 py-1.5 font-semibold">Pre-book</Link></nav></div></motion.header>}
 export default function App(){const loc=useLocation(),[ids,setIds]=useState([]),[cart,setCart]=useState(()=>{try{return JSON.parse(localStorage.getItem('cart'))||[]}catch{return[]}});
 useEffect(()=>{localStorage.setItem('cart',JSON.stringify(cart))},[cart]);
-const addCart=it=>setCart(c=>{const k=c.findIndex(x=>x.id===it.id&&x.size===it.size&&x.colour===it.colour);if(k>=0)return c.map((x,i)=>i===k?{...x,qty:x.qty+1}:x);return[...c,{...it,qty:1}]});
-const setQty=(i,q)=>setCart(c=>q<1?c.filter((_,k)=>k!==i):c.map((x,k)=>k===i?{...x,qty:q}:x));const clearCart=()=>setCart([]);
+const addCart=it=>setCart(c=>{const k=c.findIndex(x=>x.id===it.id&&x.size===it.size&&x.colour===it.colour);if(k>=0)return c.map((x,i)=>i===k?{...x,qty:Math.min(x.qty+1,x.stock||999)}:x);return[...c,{...it,qty:1}]});
+const setQty=(i,q)=>setCart(c=>q<1?c.filter((_,k)=>k!==i):c.map((x,k)=>k===i?{...x,qty:Math.min(q,x.stock||999)}:x));const clearCart=()=>setCart([]);
 useEffect(()=>{sb.from('wishlists').select('product_id').eq('device_id',device()).then(r=>setIds((r.data||[]).map(x=>x.product_id)))},[]);
 const toggle=async id=>{const has=ids.includes(id);setIds(has?ids.filter(x=>x!==id):[...ids,id]);const q=sb.from('wishlists');has?await q.delete().match({device_id:device(),product_id:id}):await q.insert({device_id:device(),product_id:id})};
 return <CartCtx.Provider value={{cart,addCart,setQty,clearCart}}><WishCtx.Provider value={{ids,toggle}}><Nav/><AnimatePresence mode="wait"><motion.main key={loc.pathname} initial={{opacity:0,x:40}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-40}} transition={{duration:.3}} className="min-h-screen pt-20">

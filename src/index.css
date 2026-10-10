@@ -15,3 +15,4 @@ html{font-size:15px}
 @media (min-width:1280px){html{font-size:17px}}
 @media (min-width:1536px){html{font-size:18px}}
 .inp{font-size:16px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
