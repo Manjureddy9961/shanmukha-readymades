@@ -5,7 +5,8 @@ export const ADDRESS='Shanmukha Readymades, Kamsala Street, Rayachoty, Annamayya
 export const ACCENT={Kids:'#FFC93C',Boys:'#4DB6E8',Men:'#1E2A5A',Girls:'#FF6B6B'};
 export const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
 export const device=()=>{let d=localStorage.getItem('sd');if(!d){d=crypto.randomUUID();localStorage.setItem('sd',d)}return d};
-export const upload=async(bucket,file)=>{const p=crypto.randomUUID()+'-'+file.name.replace(/\s/g,'_');const{error}=await sb.storage.from(bucket).upload(p,file);if(error)throw error;return sb.storage.from(bucket).getPublicUrl(p).data.publicUrl};
+const shrink=f=>new Promise(r=>{if(!f.type.startsWith('image/')||f.type==='image/svg+xml'||f.size<400*1024)return r(f);const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1400/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>r(b?new File([b],f.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'}):f),'image/jpeg',.82)};im.onerror=()=>r(f);im.src=u});
+export const upload=async(bucket,file0)=>{const file=await shrink(file0);const p=crypto.randomUUID()+'-'+file.name.replace(/\s/g,'_');const{error}=await sb.storage.from(bucket).upload(p,file);if(error)throw error;return sb.storage.from(bucket).getPublicUrl(p).data.publicUrl};
 export function useData(fn,deps=[]){const[d,setD]=useState(null);const load=()=>fn().then(r=>setD(r.data||[]));useEffect(()=>{load()},deps);return[d,load]}
 export function useSettings(){const[l,load]=useData(()=>sb.from('settings').select('*'));return[Object.fromEntries((l||[]).map(x=>[x.key,x.value])),load]}
 export const WishCtx=createContext();export const useWish=()=>useContext(WishCtx);

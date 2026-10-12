@@ -1,2 +1,5 @@
 import React from 'react';import {createRoot} from 'react-dom/client';import {BrowserRouter} from 'react-router-dom';import App from './App';import './index.css';
-createRoot(document.getElementById('root')).render(<BrowserRouter><App/></BrowserRouter>)
+const box={padding:24,fontFamily:'sans-serif',textAlign:'center',maxWidth:480,margin:'80px auto'};
+class EB extends React.Component{state={e:null};static getDerivedStateFromError(e){return{e}}render(){return this.state.e?<div style={box}><h2>Something went wrong</h2><p>Please refresh the page. If it keeps happening, please call the shop.</p><small>{String(this.state.e.message||this.state.e)}</small></div>:this.props.children}}
+const missing=!import.meta.env.VITE_SUPABASE_URL||!import.meta.env.VITE_SUPABASE_ANON_KEY;
+createRoot(document.getElementById('root')).render(missing?<div style={box}><h2>Setup needed</h2><p>VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is missing. Add it to your .env file (or Vercel environment variables) and restart.</p></div>:<EB><BrowserRouter><App/></BrowserRouter></EB>)
